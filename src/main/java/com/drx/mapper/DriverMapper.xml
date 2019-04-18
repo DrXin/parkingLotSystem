@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drx.mapper.DriverMapper">
+	
+	<select id="findDriverById" parameterType="int" resultType="driver">
+		SELECT * FROM driver WHERE id=#{value}
+	</select>
+
+	<select id="getDrivers" resultType="driver">
+		SELECT * FROM driver
+	</select>
+
+	<select id="findDriverByUsername" parameterType="string" resultType="driver">
+		SELECT * FROM driver JOIN user on driver.driverId=user.driverId where user.username = #{value}
+	</select>
+
+	<!--update-->
+	<update id="modifyDriverName" parameterType="java.util.Map">
+		UPDATE driver SET driverName=#{driverName}
+		where driverId=#{driverId}
+	</update>
+	<update id="modifyGender" parameterType="java.util.Map">
+		UPDATE driver SET gender=#{gender}
+		where driverId=#{driverId}
+	</update>
+	<update id="modifyPhone" parameterType="java.util.Map">
+		UPDATE driver SET phone=#{phone}
+		where driverId=#{driverId}
+	</update>
+	<update id="modifyIdCardNum" parameterType="java.util.Map">
+		UPDATE driver SET idCardNum=#{idCardNum}
+		where driverId=#{driverId}
+	</update>
+	<update id="modifyAddress" parameterType="java.util.Map">
+		UPDATE driver SET address=#{address}
+		where driverId=#{driverId}
+	</update>
+	<!--update-->
+
+
+	<select id="findDriverByIdCardNum" parameterType="string" resultType="driver">
+		SELECT * FROM driver WHERE idCardNum = #{value}
+	</select>
+
+	<delete id="deleteDriverById" parameterType="int">
+		DELETE FROM driver WHERE driverId=#{value}
+	</delete>
+
+	<!--<update id="updateUser" parameterType="user">-->
+		<!--UPDATE USER-->
+		<!--SET username=#{username},birthday=#{birthday},gender=#{gender},address=#{address}-->
+		<!--WHERE id=#{id}-->
+	<!--</update>-->
+
+	<insert id="insertDriver" parameterType="driver">
+		insert into driver (driverName,gender,phone,address,idCardNum)
+		values(#{driverName},#{gender},#{phone},#{address},#{idCardNum})
+	</insert>
+</mapper>

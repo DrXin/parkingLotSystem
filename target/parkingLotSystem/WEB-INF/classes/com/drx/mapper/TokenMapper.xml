@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drx.mapper.TokenMapper">
+    <insert id="insertToken" parameterType="token">
+        insert into token (tokenNum,beginTime,endTime,carId) values
+        (#{tokenNum},#{beginTime},#{endTime},#{carId})
+    </insert>
+    <select id="findTokenByCarId" parameterType="int" resultType="token">
+        select * from token where carId = #{carId}
+    </select>
+    <select id="findTokensByDriverId" parameterType="int" resultType="com.drx.dto.TokenMsg">
+        select c.licenseNum,t.beginTime,t.endTime,t.tokenNum from token t join car c on c.carId = t.carId
+        where c.driverId = #{driverId}
+    </select>
+</mapper>

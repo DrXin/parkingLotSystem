@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drx.mapper.UserMapper">
+	
+	<select id="findUserByUsername" parameterType="string" resultType="user">
+		SELECT * FROM user WHERE username=#{value}
+	</select>
+
+	<select id="findUserByDriverId" parameterType="int" resultType="user">
+		SELECT * FROM USER WHERE driverId = #{value}
+	</select>
+
+	<!--<delete id="deleteUserById" parameterType="int">-->
+		<!--DELETE FROM USER WHERE id=#{value}-->
+	<!--</delete>-->
+
+	<update id="updateUser" parameterType="user">
+		UPDATE USER
+		SET username=#{username},password=#{password},authority=#{authority},driverId=#{driverId}
+		WHERE userId=#{userId}
+	</update>
+
+	<insert id="addUser" parameterType="user" useGeneratedKeys="true" keyProperty="userId">
+		insert into user (username,password,authority,driverId)
+		values(#{username},#{password},#{authority},#{driverId})
+	</insert>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drx.mapper.CarMapper">
+	
+	<select id="findCarsByDriverId" parameterType="int" resultType="car">
+		SELECT * FROM car WHERE driverId=#{value}
+	</select>
+
+	<select id="findCarIdsByDriverId" parameterType="int" resultType="int">
+		SELECT carId FROM car WHERE driverId=#{value}
+	</select>
+
+	<select id="findCarByLicenseNum" parameterType="string" resultType="car">
+		SELECT * FROM car WHERE licenseNum = #{licenseNum}
+	</select>
+
+	<delete id="deleteCarById" parameterType="int">
+		DELETE FROM car WHERE carId=#{carId}
+	</delete>
+
+	<update id="modifyCarMsg" parameterType="car">
+		UPDATE car
+		SET licenseNum=#{licenseNum},driverId=#{driverId},color=#{color},formulaId=#{formulaId},brand=#{brand}
+		WHERE carId=#{carId}
+	</update>
+
+	<insert id="insertCar" parameterType="car" useGeneratedKeys="true">
+		INSERT INTO car (color,licenseNum,driverId,brand,formulaId) VALUES(#{color},#{licenseNum},#{driverId},#{brand},#{formulaId});
+	</insert>
+
+</mapper>

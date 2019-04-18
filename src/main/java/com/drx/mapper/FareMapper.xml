@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drx.mapper.FareMapper">
+    <select id="findFaresByDriverId" parameterType="int" resultType="com.drx.dto.FareMsg">
+        SELECT  c.licenseNum,p.beginTime,p.endTime,p.totalTime,f.total,f.paid,f.fareId
+        FROM fare f
+        JOIN parkingtime p ON p.timeId = f.timeId
+        JOIN car c ON c.carId = p.carId
+        WHERE c.driverId = #{driverId}
+    </select>
+
+    <insert id="insertFares" parameterType="java.util.List">
+        insert into fare (timeId,total,carId,paid) values
+        <foreach collection="list" item="fare" index="index" separator=",">
+            (#{fare.timeId},#{fare.total},#{fare.carId},#{fare.paid})
+        </foreach>
+    </insert>
+
+    <update id="updatePaidById" parameterType="int">
+        update fare set paid = 1 where fareId = #{fareId}
+    </update>
+</mapper>

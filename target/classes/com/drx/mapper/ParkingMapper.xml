@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drx.mapper.ParkingMapper">
+    <select id="findParkings" resultType="parking">
+        select * from parking
+    </select>
+    <insert id="insertParkings" parameterType="java.util.List">
+        insert into parking (occupied) values
+        <foreach collection="list" separator="," index="index" item="item">
+            (#{item.occupied})
+        </foreach>
+    </insert>
+    <update id="updateById" parameterType="java.util.Map">
+        update parking set occupied = #{occupied} where pId = #{pId}
+    </update>
+</mapper>

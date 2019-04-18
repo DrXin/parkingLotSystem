@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.drx.mapper.ParkingTimeMapper">
+    <insert id="insertParkingTime" parameterType="parkingTime">
+        insert into parkingtime (beginTime,endTime,totalTime,carId) values
+        (#{beginTime},#{endTime},#{totalTime},#{carId})
+    </insert>
+
+    <select id="findTimesByCarId" parameterType="int" resultType="com.drx.dto.Time">
+        select p.timeId,p.beginTime,p.endTime,p.totalTime,c.licenseNum from parkingtime p
+        join car c on c.carId = p.carId
+        where p.carId = #{carId}
+    </select>
+
+    <select id="findTimesByCarIdAndFormulaId" parameterType="java.util.Map" resultType="com.drx.dto.Time">
+        select p.timeId,p.beginTime,p.endTime,p.totalTime,c.licenseNum from parkingtime p
+        join car c on c.carId = p.carId
+        where p.carId = #{carId} and c.formulaId=#{formulaId}
+    </select>
+
+    <select id="findTimesByCarIds" parameterType="java.util.List" resultType="parkingTime">
+        select * from parkingTime where carId in
+        <foreach collection="list" open="(" close=")" separator="," index="index" item="carId">
+            #{carId}
+        </foreach>
+    </select>
+</mapper>
